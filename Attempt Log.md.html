@@ -1,0 +1,55 @@
+		**Attempt Log**
+	(Subheading)
+
+This is a log of my attempts
+
+Attempt 1
+:	I honestly don't even remember this attempt. I just remember that this was the attempt that made me realize 'Maybe this isn't so trivial
+
+	I attempted to implement the Pytorch example after this failed attempt, but that solution was deviating too much from the idea I understood.
+
+Attempt 2
+:	So I scrapped it and started again with a little clarity of the unclear. In this attempt I implemented my understanding of Q-Learnng in small steps. I managed to implement it mostly right where the reward is estimated as the difference between the current cumilative reward and the discounted next cumilative reward. I could see that the model was learning some kind of relation between current and next discounted cumilative reward. But that did not translate well to actually making good cumilative reward prediction for a good policy. The lynch pin that I was missing was to set all cumilative rewards to 0 for any terminal state. 
+
+	A way to think about this is that the temporal difference part of the learning learns the difference in rewards for consecutive states. But this is just learning relative rewards which are relative to somthing else that is defined relatively. Such a model fails to make absolute predictions because it never learning anything relative to an absolut value. Setting terminal cumilative rewards to 0 privides that absolute value. Then all the relative rewards are learned relative to that absolute value of 0 cumilative reward from any terminal state.
+
+Attempt 3
+:	I want to reimplement attempt 2 (Q-learning) without all the intermediate steps I wrote. I'll also use this attempt to play with decays.
+
+	Hmmmmm.... So I've played with decays and I think I've got an intuition for it. Basically start with high epsilon to explore more initially then slowly reduce it to eploit more.
+	However the issue I'm facing is that the model doesn't seem to remember and stay stable for long. Anytime the model ever gets good it inevitablly becomes bad because it stops training on the mistakes that made it good. 
+	I guess ideally you should stop training when you get good but I want the model to be able to keep training and not get bad. Its should ideally stay stable even as it keeps training on newer and newer data. 
+	Because training on newer data is how it will stay adaptable to changing environments
+
+Attempt 4
+:	With this attempt I wish to get a better understanding of what strategies I should use to maintain a replay buffer.
+
+	To start I think I simplified Attempt 3 even more. I got rid of the losses array and replaced it with a single loss value that gets consecutively updated.
+	I store how many times the loss is updated and when the loss is updated more than 32 (batch size) times, I backpropogate and update the network.
+	Works good when you train around 1300 rounds and stop.
+
+	Now I'm gonna experiment with finite replay buffers and stuff using replacement strategies like 
+
+	- Keep Recent 
+	- Keep Novel
+	- Keep Difficult (Big loss)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Markdeep: --><style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style><script src="markdeep.min.js" charset="utf-8"></script><script src="https://morgan3d.github.io/markdeep/latest/markdeep.min.js" charset="utf-8"></script><script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>
